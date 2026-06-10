@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react';
-import About from './pages/About';
-import Cart from './pages/Cart';
-import History from './pages/History';
-import Home from './pages/Home';
-import Interest from './pages/Interest';
-import Leagues from './pages/Leagues';
-import Players from './pages/Players';
-import Rules from './pages/Rules';
-import Shop from './pages/Shop';
-import Stats from './pages/Stats';
-import Users from './pages/Users';
+import About from 'About';
+import Cart from 'Cart';
+import History from 'History';
+import Home from 'Home';
+import Interest from 'Interest';
+import Leagues from 'Leagues';
+import Players from 'Players';
+import Rules from 'Rules';
+import Shop from 'Shop';
+import Stats from 'Stats';
+import Users from 'Users';
 
 const pages = {
   '/': Home,
