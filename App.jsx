@@ -1,15 +1,15 @@
-import { useMemo, useState } from 'react';
-import About from 'About';
-import Cart from 'Cart';
-import History from 'History';
-import Home from 'Home';
-import Interest from 'Interest';
-import Leagues from 'Leagues';
-import Players from 'Players';
-import Rules from 'Rules';
-import Shop from 'Shop';
-import Stats from 'Stats';
-import Users from 'Users';
+import { useEffect, useMemo, useState } from 'react';
+import About from './About';
+import Cart from './Cart';
+import History from './History';
+import Home from './Home';
+import Interest from './Interest';
+import Leagues from './Leagues';
+import Players from './Players';
+import Rules from './Rules';
+import Shop from './Shop';
+import Stats from './Stats';
+import Users from './Users';
 
 const pages = {
   '/': Home,
@@ -40,9 +40,31 @@ const navItems = [
 ];
 
 function App() {
-  const [path, setPath] = useState(() => window.location.pathname || '/');
+  const getPath = () =>
+    window.location.hash.replace('#', '') || '/';
 
-  const CurrentPage = useMemo(() => pages[path] || Home, [path]);
+  const [path, setPath] = useState(getPath);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setPath(getPath());
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+  const CurrentPage = useMemo(
+    () => pages[path] || Home,
+    [path]
+  );
+
+  const navigate = (to) => {
+    window.location.hash = to;
+  };
 
   return (
     <div className="app-shell">
@@ -51,18 +73,20 @@ function App() {
           <p className="eyebrow">Cricket project</p>
           <h1>Classic Cricket World</h1>
         </div>
+
         <nav className="nav-links">
           {navItems.map(([label, to]) => (
             <a
               key={to}
-              href={to}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={path === to ? 'nav-link active' : 'nav-link'}
-              onClick={(event) => {
-                event.preventDefault();
-                window.open(to, '_blank', 'noopener,noreferrer');
-                setPath(to);
+              href={`#${to}`}
+              className={
+                path === to
+                  ? 'nav-link active'
+                  : 'nav-link'
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(to);
               }}
             >
               {label}
@@ -71,7 +95,9 @@ function App() {
         </nav>
       </header>
 
-      <main className="content-wrap"><CurrentPage /></main>
+      <main className="content-wrap">
+        <CurrentPage />
+      </main>
     </div>
   );
 }
