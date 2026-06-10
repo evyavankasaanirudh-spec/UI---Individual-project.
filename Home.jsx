@@ -21,7 +21,7 @@ function Home() {
           </div>
         </article>
         <figure className="hero-media">
-          <img src="../src/assets/Cricket.png" alt="Cricket action" className="hero-image" />
+          <img src="Cricket.png" alt="Cricket action" className="hero-image" />
         </figure>
       </section>
 
